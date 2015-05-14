@@ -10,6 +10,7 @@ import android.util.Log;
 
 
 
+
 /**
  * Created by ori on 4/11/2015.
  */
@@ -19,8 +20,12 @@ public class ChatClient {
     ChatClient(){
     	try {
     	  InetAddress address;
-    	  address = InetAddress.getByName("192.168.1.104");
-    	  socket = new Socket(address,5469);
+    	  address = InetAddress.getByName("10.0.2.2");
+    	  Log.i("Socket", "C: Connecting...");
+    	  
+    	  socket = new Socket(address,3333);
+    	  
+    	  Log.i("Socket", "C: Connected");
     	}catch (IOException e){
     		e.printStackTrace();
     	}
@@ -29,13 +34,13 @@ public class ChatClient {
     由于登陆和注册的结果都是要进入myActivity的，所以b获值true即可
      */
     public boolean sendLoginInfo(Object obj) {
-    	Log.v("aaa","bbb");
+    	
         //InetAddress address;
         boolean b = false;
         try {
             //连接SERVER
-            //address = InetAddress.getByName("192.168.1.104");
-            //socket = new Socket(address,5469);
+//            address = InetAddress.getByName("192.168.1.3");
+//            socket = new Socket(address,3333);
 
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             oos.writeObject(obj);
@@ -51,5 +56,23 @@ public class ChatClient {
             e.printStackTrace();
         }
         return b;
+    }
+    
+    public boolean sendRegisterInfo(Object obj){
+    	boolean b = false;
+    	try{
+    		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+    		oos.writeObject(obj);
+    		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+    		b = (Boolean)ois.readObject();
+
+    	}catch (IOException e){
+    		e.printStackTrace();
+    	}catch (ClassNotFoundException e){
+    		e.printStackTrace();
+    	}
+    	return b;
+    		
+    
     }
 }

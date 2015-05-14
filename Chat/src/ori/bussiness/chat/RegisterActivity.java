@@ -36,43 +36,50 @@ public class RegisterActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	public void cancel (View view){
-        startActivity(new Intent(this,LoginActivity.class));
-    }
 
-    /*
-    实现注册新用户
-     */
-    public void registerToServer(View view) {
-    	User user;
-        //获取用户输入的用户名
-        String tem = ((EditText)findViewById(R.id.user_input)).getText().toString();
-        if("".equals(tem)) {
-            Toast.makeText(this, "用户名不能为空！Poi！", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        int account = Integer.parseInt(tem);
-        //获取密码并判断是否一致
-        String psw = ((EditText)findViewById(R.id.psw_input)).getText().toString();
-        String pswC = ((EditText)findViewById(R.id.pswC_input)).getText().toString();
-        if(psw.equals(pswC)){
-            user = new User(account,psw);
-            user.setOperation("register");
-            
-            try{
-            	Log.v("aaa","bbb");
-            boolean b = new ChatClient().sendLoginInfo(user);
-            
-            if(b) {
-                startActivity(new Intent(this,MyActivity.class));
-                Toast.makeText(this,"注册成功! Poi!",Toast.LENGTH_SHORT).show();
-            }
-            }catch (Exception e){e.printStackTrace();}
-        }else{
-            Toast.makeText(this,"两次密码不一致.Poi!",Toast.LENGTH_SHORT).show();
-            //下面可以添加清空EditText框中的内容
-        }
-        
-    }
+	public void cancel(View view) {
+		startActivity(new Intent(this, LoginActivity.class));
+	}
+
+	/*
+	 * 实现注册新用户
+	 */
+	public void registerToServer(View view) {
+		User user;
+		// 获取用户输入的用户名
+		String tem = ((EditText) findViewById(R.id.user_input)).getText()
+				.toString();
+		if ("".equals(tem)) {
+			Toast.makeText(this, "用户名不能为空！Poi！", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		int account = Integer.parseInt(tem);
+		// 获取密码并判断是否一致
+		String psw = ((EditText) findViewById(R.id.psw_input)).getText()
+				.toString();
+		String pswC = ((EditText) findViewById(R.id.pswC_input)).getText()
+				.toString();
+		if (psw.equals(pswC)) {
+			user = new User(account, psw);
+			user.setOperation("register");
+
+			try {
+				Log.v("aaa", "bbb");
+				boolean b = new ChatClient().sendRegisterInfo(user);
+				Log.v("aaa", "cccc");
+
+				if (b) {
+					startActivity(new Intent(this, MyActivity.class));
+					Toast.makeText(this, "注册成功! Poi!", Toast.LENGTH_SHORT)
+							.show();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			Toast.makeText(this, "两次密码不一致.Poi!", Toast.LENGTH_SHORT).show();
+			// 下面可以添加清空EditText框中的内容
+		}
+
+	}
 }

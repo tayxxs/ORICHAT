@@ -7,7 +7,7 @@ public class User implements java.io.Serializable {
    
 
     /**
-	 * 
+	 * 用户基本信息
 	 */
 	private static final long serialVersionUID = 1L;
 	private int account;
