@@ -1,6 +1,9 @@
-
+package ori.bussiness.chat;
 
 public class User implements java.io.Serializable{
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	String operation;
 	int account;
